@@ -74,7 +74,7 @@ module Blur
 
       # The arbitrary regex pattern.
       Pattern = /^(?:[:@]([^\s]+) )?([^\s]+)(?: ((?:[^:\s][^\s]* ?)*))?(?: ?:(.*))?$/
-      HostMask = /^(\S+)!(\S+)@(\S+)$/
+      HostMask = /^(#{Nick})!(\S+)@(\S+)$/
       
       # Parse a line and encapsulate it as a Command.
       #
@@ -82,8 +82,8 @@ module Blur
       # @example
       #   Command.parse "ChanServ!ChanServ@services.uplink.io MODE #uplink +v mk"
       #   # => #<Blur::Network::Command … >
-      def self.parse data
-        match = data.strip.match Pattern
+      def self.parse line
+        match = line.strip.match Pattern
         prefix, name, args, extra = match.captures
         params = extra ? args.split << extra : args.split
 
